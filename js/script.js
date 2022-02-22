@@ -82,7 +82,6 @@ function Validator(form) {
               break;
             case 'checkbox':
               if (!input.checked) {
-                datas[input.name] = "";
                 return datas;
               }
               if (!Array.isArray(datas[input.name])) {
