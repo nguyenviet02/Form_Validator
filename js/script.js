@@ -4,6 +4,7 @@ let objectRules = {};
 //* Tạo biến để lưu mật khẩu nhập vào
 var pw = "";
 
+//* Hàm tìm phần tử
 function findEle(input, ele) {
   while (input.parentNode) {
     if (input.parentElement.matches(ele)) {
@@ -14,9 +15,10 @@ function findEle(input, ele) {
 }
 
 //* Tạo hàm kiểm tra, trả về thông báo lỗi
+//<> function validate start
 function validate(form, inputEle, rule) {
   //* Lấy phần tử cha form-group
-  var formGroup = findEle(inputEle, ".form-group");
+  var formGroup = findEle(inputEle, form.formEle_class);
   //* Lấy các rule từ selector
   var rules = objectRules[rule.selector];
   //* Lặp qua các rule, nếu lỗi thì break r lấy error message
@@ -38,15 +40,17 @@ function validate(form, inputEle, rule) {
   //* Xuất thông báo lỗi
   if (errorMessage) {
     inputEle.classList.add('error');
-    formGroup.querySelector('.form-message').innerText = errorMessage;
+    formGroup.querySelector(form.form_message).innerText = errorMessage;
   }
   else {
     inputEle.classList.remove('error');
-    formGroup.querySelector('.form-message').innerText = "";
+    formGroup.querySelector(form.form_message).innerText = "";
   }
   return !errorMessage;
 }
+//<> function validate end
 
+//* Hàm lấy mật khẩu để so sánh khi nhập lại
 function getPass() {
   let pass = document.getElementById("password");
   pass.addEventListener("input", () => {
@@ -54,6 +58,9 @@ function getPass() {
   })
 }
 
+//* Khởi tạo hàm Validator để validate form
+
+//<> function Validator start 
 function Validator(form) {
   formEle = document.querySelector(form.id);
   formEle.addEventListener('submit', (e) => {
@@ -117,7 +124,7 @@ function Validator(form) {
 
         //* Xóa thông báo lỗi khi nhập
         inputEle.oninput = function () {
-          inputEle.closest(".form-group").querySelector('.form-message').innerText = "";
+          inputEle.closest(form.formEle_class).querySelector(form.form_message).innerText = "";
           inputEle.classList.remove('error');
         }
 
@@ -138,62 +145,75 @@ function Validator(form) {
     });
   }
 }
+//<> function Validator end
 
-Validator.isRequired = function (selector) {
+
+//! Khu vực các rule
+
+//<> Rule isRequired start
+Validator.isRequired = function (selector, message) {
   return {
     selector: selector,
     check: function (value) {
-      return value ? undefined : 'Vui lòng nhập trường này';
+      return value ? undefined : message || 'You must fill this field';
     }
   }
 }
+//<> Rule isRequired end
 
-Validator.isUsername = function (selector) {
+//<> Rule isUserName start
+Validator.isUsername = function (selector, message) {
   return {
     selector: selector,
     check: function (value) {
       const regexUserName = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,}$/gm;
       if (!value.match(regexUserName)) {
-        return "Name should contain at least one digit, at least one lower case, and at least one upper case";
+        return message || 'Username is invalid';
       }
-      return "";
+      return undefined;
     }
   }
 }
+//<> Rule isUserName end
 
-Validator.isEmail = function (selector) {
+//<> Rule isEmail start
+Validator.isEmail = function (selector, message) {
   return {
     selector: selector,
     check: function (value) {
       const regexEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
       if (!value.match(regexEmail)) {
-        return "Email không hợp lệ";
+        return message || "Email is  invalid !";
       }
       else {
-        return "";
+        return undefined;
       }
     }
   }
 }
+//<> Rule isEmail end
 
-Validator.isPassword = function (selector) {
+//<> Rule isPassword start
+Validator.isPassword = function (selector, message) {
   return {
     selector: selector,
     check: function (value) {
       const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,}$/;
 
       if (!regex.test(value)) {
-        return "The password should contain at least one digit, at least one lower case, and at least one upper case and at least 8 characters";
+        return message || "Password is  invalid !";
       }
       else {
-        return "";
+        return undefined;
       }
     }
   }
 }
+//<> Rule isPassword end
 
-Validator.samePassword = function (selector) {
+//<> Rule check repassword start
+Validator.samePassword = function (selector, message) {
   //* Lấy password để so sánh
   getPass();
   return {
@@ -201,40 +221,49 @@ Validator.samePassword = function (selector) {
     check: function (value) {
 
       if (value != pw) {
-        return "Mật khẩu không khớp";
+        return message || "Re-Passwword is not same as password";
       }
       else {
-        return "";
+        return undefined;
       }
     }
   }
 }
+//<> Rule check repassword end
 
-Validator.isPhone = function (selector) {
+//<> Rule check phone number start
+Validator.isPhone = function (selector, message) {
   return {
     selector: selector,
     check: function (value) {
       const regex = /((09|03| 07|08|05)+([0-9]{8})\b)/g;
 
       if (!regex.test(value)) {
-        return "Số điện thoại không hợp lệ !";
+        return message || "Phone number is not valid";
       } else {
-        return "";
+        return undefined;
       }
     }
   }
 }
+//<> Rule check phone number end
 
+
+
+//<> Validator start
 Validator({
   id: "#form_1",
   formEle_class: ".form-group",
+  form_message: ".form-message",
   rules: [
-    Validator.isRequired("#username"),
-    Validator.isUsername("#username"),
+    Validator.isRequired("#first_name", "First name is required"),
+    Validator.isRequired("#last_name", "Last name is required"),
+    Validator.isRequired("#username", "Please enter your username"),
+    Validator.isUsername("#username", "Login name must have at least 4 characters, including uppercase, lowercase and number"),
     Validator.isRequired("#email"),
     Validator.isEmail("#email"),
     Validator.isRequired("#password"),
-    Validator.isPassword("#password"),
+    Validator.isPassword("#password", "Password must contain at least 8 characters, including uppercase, lowercase, numbers, special characters"),
     Validator.samePassword("#re-password"),
     Validator.isRequired("#phone"),
     Validator.isPhone("#phone"),
@@ -244,5 +273,6 @@ Validator({
   getData: function (data) {
     console.log(data);
   }
-})
+});
+//<> Validator end
 

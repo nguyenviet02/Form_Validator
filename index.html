@@ -7,103 +7,117 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Validate Form</title>
   <link rel="stylesheet" href="./scss/css/style.css">
-  <!-- <script src="./js/regex_library.js" defer></script> -->
   <script src="./js/script.js" defer></script>
 </head>
 
 <body>
-  <form action="#" class="form" id="form_1">
-    <h1 class="title">Log In</h1>
+  <div class="form_container">
+    <form action="#" class="form" id="form_1">
+      <div class="form_content">
+        <h1 class="title">Validator Form</h1>
 
-    <div class="form-group">
-      <label for="username">Username: <span style="color: red; font-size:11px;">(*)</span> </label>
-      <input type="text" id="username" name="username" placeholder="Username">
-      <small class="form-message"></small>
-    </div>
-
-    <div class="form-group">
-      <label for="password">Password: <span style="color: red; font-size:11px;">(*)</span> </label>
-      <input type="password" id="password" name="password" placeholder="Password">
-      <small class="form-message"></small>
-    </div>
-
-    <div class="form-group">
-      <label for="re-password">Re-Password: <span style="color: red; font-size:11px;">(*)</span></label>
-      <input type="password" id="re-password" name="re-password" placeholder="Re-Password">
-      <small class="form-message"></small>
-    </div>
-
-    <div class="form-group">
-      <label for="email">Email: <span style="color: red; font-size:11px;">(*)</span> </label>
-      <input type="email" id="email" name="email" placeholder="Email">
-      <small class="form-message"></small>
-    </div>
-
-    <div class="form-group">
-      <label for="phone">Phone: <span style="color: red; font-size:11px;">(*)</span> </label>
-      <input type="text" id="phone" name="phone" placeholder="Phone">
-      <small class="form-message"></small>
-    </div>
-
-    <div class="form-group">
-      <label for="address">Address:<span style="font-size:11px;">(Optional)</span> </label>
-      <input type="text" id="address" name="address" placeholder="Address">
-      <small class="form-message"></small>
-    </div>
-
-    <div class="form-group">
-      <label for="province">Province:<span style="font-size:11px;">(Optional)</span> </label>
-      <select name="province" id="province">
-        <option value="">-- Select Province --</option>
-        <option value="Hồ Chí Minh">Hồ Chí Minh</option>
-        <option value="Hà Nội">Hà Nội</option>
-      </select>
-      <small class="form-message"></small>
-    </div>
-
-    <div class="form-group">
-      <label for="gender">Gender<span style="font-size:11px; color: red;">(*)</span> </label>
-      <div class="gender">
-        <div class="male">
-          <input type="checkbox" name="gender" value="Male" id="male">
-          <label for="male">Male</label>
+        <!-- Full_Name -->
+        <div class="fullname">
+          <!-- First_Name -->
+          <div class="form-group firstname">
+            <input type="text" name="firstname" id="first_name" class="form-control" placeholder="First Name">
+            <small class="form-message"></small>
+          </div>
+          <!-- Last_Name -->
+          <div class="form-group lastname">
+            <input type="text" name="lastname" id="last_name" class="form-control" placeholder="Last Name">
+            <small class="form-message"></small>
+          </div>
         </div>
-        <div class="female">
-          <input type="checkbox" name="gender" value="Female" id="female">
-          <label for="female">Female</label>
-        </div>
-        <div class="other">
-          <input type="checkbox" name="gender" value="Other" id="other">
-          <label for="other">Other</label>
-        </div>
-      </div>
-      <small class="form-message"></small>
-    </div>
 
-    <!-- <div class="form-group">
-      <label for="gender">Gender<span style="font-size:11px; color: red;">(*)</span> </label>
-      <div class="province">
-        <div class="HaNoi">
-          <input type="checkbox" name="province" value="Ha Noi" id="hanoi">
-          <label for="hanoi">Ha Noi</label>
+        <!-- Username -->
+        <div class="form-group">
+          <input type="text" id="username" name="username" placeholder="Username">
+          <small class="form-message"></small>
         </div>
-        <div class="HoChiMinh">
-          <input type="checkbox" name="province" value="Ho Chi Minh" id="hcm">
-          <label for="hcm">Ha Noi</label>
-        </div>
-        <div class="HaNoi">
-          <input type="checkbox" name="province" value="Ha Noi" id="hanoi">
-          <label for="hanoi">Ha Noi</label>
-        </div>
-      </div>
-      <small class="form-message"></small>
-    </div> -->
 
-    <div class="form-group">
-      <input type="submit" value="Submit" class="submit">
-    </div>
+        <!-- Password -->
+        <div class="form-group">
+          <input type="password" id="password" name="password" placeholder="Password">
+          <small class="form-message"></small>
+        </div>
 
-  </form>
+        <!-- RePassword -->
+        <div class="form-group">
+          <input type="password" id="re-password" name="re-password" placeholder="Re-Password">
+          <small class="form-message"></small>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <input type="email" id="email" name="email" placeholder="Email">
+          <small class="form-message"></small>
+        </div>
+
+        <!-- Phone -->
+        <div class="form-group">
+          <input type="text" id="phone" name="phone" placeholder="Phone">
+          <small class="form-message"></small>
+        </div>
+
+        <!-- Province -->
+        <div class="form-group">
+          <select name="province" id="province">
+            <option value="">-- Select Province --</option>
+            <option value="Ho Chi Minh">Ho Chi Minh</option>
+            <option value="Ha Noi">Ha Noi</option>
+          </select>
+          <small class="form-message"></small>
+        </div>
+
+        <!-- Skills -->
+        <div class="form-group input_check">
+          <label for="skills">Skills: <span style="font-size:11px;">(Optional)</span>
+          </label>
+          <div class="skills">
+            <div class="skill">
+              <input type="checkbox" name="skill" value="HTML" id="html">
+              <label for="html">HTML</label>
+            </div>
+            <div class="skill">
+              <input type="checkbox" name="skill" value="CSS" id="css">
+              <label for="css">CSS</label>
+            </div>
+            <div class="skill">
+              <input type="checkbox" name="skill" value="JavaScript" id="js">
+              <label for="js">JavaScript</label>
+            </div>
+          </div>
+          <small class="form-message"></small>
+        </div>
+
+        <!-- Gender -->
+        <div class="form-group  input_check">
+          <label for="gender">Gender: <span style="font-size:11px; color: red;">(*)</span>
+          </label>
+          <div class="genders">
+            <div class="gender">
+              <input type="radio" name="gender" value="Male" id="male">
+              <label for="male">Male</label>
+            </div>
+            <div class="gender">
+              <input type="radio" name="gender" value="Female" id="female">
+              <label for="female">Female</label>
+            </div>
+            <div class="gender">
+              <input type="radio" name="gender" value="Other" id="other">
+              <label for="other">Other</label>
+            </div>
+          </div>
+          <small class="form-message"></small>
+        </div>
+
+        <!-- Submit -->
+        <div class="form-group">
+          <input type="submit" value="Submit" class="submit">
+        </div>
+    </form>
+  </div>
 </body>
 
 </html>
